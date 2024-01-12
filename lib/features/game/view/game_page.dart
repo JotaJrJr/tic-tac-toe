@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:tic_tac_toe_game/features/game/widgets/tic_tac_toe_board_widget.dart';
 import 'package:tic_tac_toe_game/provider/room_data_provider.dart';
 import 'package:tic_tac_toe_game/resources/socket_method.dart';
 
@@ -26,50 +27,25 @@ class _GamePageState extends State<GamePage> {
 
   @override
   Widget build(BuildContext context) {
-    RoomDataProvider roomDataProvider = Provider.of<RoomDataProvider>(context, listen: false);
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Game Page'),
       ),
-      // body: Text(
-      //   textToCopy,
-      // ),
-      body: AnimatedBuilder(
-          animation: RoomDataProvider(),
-          builder: (_, __) {
-            return roomDataProvider.roomData['canJoin']
-                ? Center(child: WaitingLobbyWidget(roomId: textToCopy))
-                : const SafeArea(
-                    child: Column(
-                    children: [ScoreBoardWidget()],
-                  ));
-          }),
-      // body: Container(
-      //     child: Column(
-      //   children: [
-      //     Text(roomDataProvider.roomData['roomId'] ?? 'No room id'),
-      //     Text(
-      //       Provider.of<RoomDataProvider>(context).roomData.toString(),
-      //     ),
-      //     const SizedBox(height: 20),
-      //     Text(
-      //       Provider.of<RoomDataProvider>(context).playerOne.name.toString(),
-      //     ),
-      //     const SizedBox(height: 20),
-      //     Text(
-      //       Provider.of<RoomDataProvider>(context).playerTwo.name ?? "",
-      //     ),
-      //     const SizedBox(height: 20),
-      //     Text(roomDataProvider.roomData.toString()),
+      body: Consumer<RoomDataProvider>(
+        builder: (context, value, child) {
+          return TicTacToeBoard();
+          // return value.canJoin
+          //     ? Center(child: WaitingLobbyWidget(roomId: textToCopy))
+          //     : const SafeArea(
+          //         child: Column(
+          //           children: [ScoreBoardWidget()],
+          //         ),
+          //       );
 
-      //     // Text(roomDataProvider.playerOne.name),
-      //     // Text(roomDataProvider.playerTwo.name),
-      //     // TicTacToeBoardWidget(),
-      //   ],
-      // )),
-      // body: WaitingLobbyWidget(roomId: roomDataProvider.roomData['roomId']),
-      // body: const Center(child: WaitingLobbyWidget(roomId: '123')),
+          // TODO : Listener para quando algum usuário sair do jogo
+          // Fechar sala ou reiniciar para que outra pessoa entrar
+        },
+      ),
     );
   }
 }

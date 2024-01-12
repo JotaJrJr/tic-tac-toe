@@ -18,6 +18,8 @@ class RoomDataProvider extends ChangeNotifier {
     points: 0,
   );
 
+  bool get canJoin => _roomData['canJoin'];
+
   Map<String, dynamic> get roomData => _roomData;
 
   PlayerModel get playerOne => _playerOne;

@@ -11,6 +11,7 @@ class SocketClient {
     connectToDatabase();
   }
 
+  // TODO : Adicionar .env para endereço IP
   void connectToDatabase() async {
     socket = IO.io("ws://192.168.0.111:3000", <String, dynamic>{
       'autoConnect': false,
@@ -20,9 +21,6 @@ class SocketClient {
     socket.onConnect((_) {
       debugPrint("Connection established");
     });
-    socket.onDisconnect((_) => debugPrint("connection Disconnection"));
-    socket.onConnectError((err) => debugPrint(err));
-    socket.onError((err) => debugPrint(err));
   }
 
   void listen(String event, Function(dynamic) callback) {
